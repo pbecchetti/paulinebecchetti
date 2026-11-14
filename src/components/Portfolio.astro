@@ -52,10 +52,16 @@ const otherLang: Lang = lang === 'fr' ? 'en' : 'fr';
       {SHOW_PROJECTS && (
       <section id="projects" class="section container">
         <h2>{t.projectsTitle}</h2>
+        <p class="section__intro">{t.projectsIntro}</p>
         <div class="projects">
           {
             projects.map((p) => (
-              <a class="project" href={p.url} target="_blank" rel="noopener">
+              <a
+                class="project"
+                href={typeof p.url === 'string' ? p.url : p.url[lang]}
+                target={p.internal ? undefined : '_blank'}
+                rel={p.internal ? undefined : 'noopener'}
+              >
                 <div class="project__preview">
                   {p.image ? (
                     <img src={p.image} alt="" loading="lazy" />
@@ -71,7 +77,7 @@ const otherLang: Lang = lang === 'fr' ? 'en' : 'fr';
                       <li>{tag}</li>
                     ))}
                   </ul>
-                  <span class="project__link">{t.visit} →</span>
+                  <span class="project__link">{p.internal ? t.seeProject : t.visit} →</span>
                 </div>
               </a>
             ))

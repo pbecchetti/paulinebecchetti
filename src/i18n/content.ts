@@ -3,7 +3,7 @@ export type Lang = 'fr' | 'en';
 export const EMAIL = 'pbecchetti@gmail.com';
 
 /** Passe à true pour afficher la section « Projets » (et son lien dans le menu). */
-export const SHOW_PROJECTS = false;
+export const SHOW_PROJECTS = true;
 
 /**
  * Projets : ajoute ici tes sites Netlify.
@@ -12,40 +12,127 @@ export const SHOW_PROJECTS = false;
  *           Laisse vide pour afficher un aperçu générique.
  */
 export const projects: {
-  url: string;
+  /** Adresse externe, ou une adresse par langue pour une page de ce site (internal: true). */
+  url: string | Record<Lang, string>;
+  internal?: boolean;
   image?: string;
   title: Record<Lang, string>;
   description: Record<Lang, string>;
   tags: string[];
 }[] = [
   {
-    url: 'https://example-projet-1.netlify.app',
-    title: { fr: 'Projet 1', en: 'Project 1' },
+    url: { en: '/cater2me/', fr: '/fr/cater2me/' },
+    internal: true,
+    image: '/projects/c2me-hp.jpg',
+    title: { fr: 'Cater2.me', en: 'Cater2.me' },
     description: {
-      fr: 'Courte description du projet à compléter.',
-      en: 'Short project description to fill in.',
+      fr: 'Landing pages, tableaux de bord pour les entreprises clientes, les restaurants et l’équipe opérations, documents imprimables en PDF : un aperçu de mon travail chez Cater2.me.',
+      en: 'Landing pages, dashboards for client companies, restaurants and the operations team, printable PDF documents: a look at my work at Cater2.me.',
     },
-    tags: ['Angular', 'TypeScript'],
+    tags: ['PHP', 'MySQL', 'JavaScript', 'jQuery', 'jsPDF'],
   },
   {
-    url: 'https://example-projet-2.netlify.app',
-    title: { fr: 'Projet 2', en: 'Project 2' },
+    url: 'https://teambit-copy-ex.netlify.app',
+    image: '/projects/teambit-copy-ex.jpg',
+    title: { fr: 'Teambit — reproduction', en: 'Teambit — replica' },
     description: {
-      fr: 'Courte description du projet à compléter.',
-      en: 'Short project description to fill in.',
+      fr: 'Reproduction de la page d’accueil de Teambit, réalisée comme exercice d’intégration.',
+      en: 'Replica of the Teambit homepage, built as a front-end exercise.',
     },
-    tags: ['HTML', 'CSS'],
+    tags: ['Angular', 'Angular Material', 'Flex Layout'],
   },
   {
-    url: 'https://example-projet-3.netlify.app',
-    title: { fr: 'Projet 3', en: 'Project 3' },
+    url: 'https://journy-copy-ex.netlify.app',
+    image: '/projects/journy-copy-ex.jpg',
+    title: { fr: 'Journy — reproduction', en: 'Journy — replica' },
     description: {
-      fr: 'Courte description du projet à compléter.',
-      en: 'Short project description to fill in.',
+      fr: 'Reproduction de la page d’accueil de Journy, service de voyages sur mesure, réalisée comme exercice Angular.',
+      en: 'Replica of the homepage of Journy, a custom travel planning service, built as an Angular exercise.',
     },
-    tags: ['JavaScript'],
+    tags: ['Angular', 'Angular Material', 'Flex Layout'],
+  },
+  {
+    url: 'https://shopify-copy-ex.netlify.app',
+    image: '/projects/shopify-copy-ex.jpg',
+    title: { fr: 'Shopify — reproduction', en: 'Shopify — replica' },
+    description: {
+      fr: 'Reproduction d’une landing page de Shopify, réalisée comme exercice d’intégration.',
+      en: 'Replica of a Shopify landing page, built as a front-end exercise.',
+    },
+    tags: ['Angular', 'Flex Layout'],
   },
 ];
+
+/** Page dédiée Cater2.me (/cater2me/ et /fr/cater2me/). Images dans /public/projects/cater2me/. */
+export const cater2me = {
+  title: { fr: 'Cater2.me', en: 'Cater2.me' },
+  period: { fr: '2012 – 2016 · San Francisco – New York', en: '2012 – 2016 · San Francisco – New York' },
+  intro: {
+    fr: 'Cater2.me organisait les repas d’entreprise en mettant en relation des bureaux avec des restaurants et food trucks. J’y ai développé le site client et les tableaux de bord des trois côtés de la plateforme : les entreprises clientes, les restaurants et traiteurs, et l’équipe logistique interne de Cater2.me, de la base de données au frontend. Voici quelques écrans retrouvés de cette époque ; les noms et adresses ont été floutés.',
+    en: 'Cater2.me organized office meals by connecting companies with restaurants and food trucks. I built the customer website and the dashboards for all three sides of the platform: client companies, restaurants and caterers, and Cater2.me’s internal operations team, from database to frontend. Here are a few screens from that time; names and addresses have been blurred.',
+  },
+  liveLabel: { fr: 'Voir la version 2 du site en ligne', en: 'See version 2 of the website live' },
+  liveUrl: 'https://c2me-hp.netlify.app',
+  items: [
+    // image : un chemin, ou plusieurs pour afficher des pages côte à côte
+    {
+      image: '/projects/cater2me/landing-brooklyn.jpg',
+      title: { fr: 'Landing page — Brooklyn', en: 'Landing page — Brooklyn' },
+      text: {
+        fr: 'Landing page locale avec formulaire de contact, intégrée avec l’équipe marketing et design.',
+        en: 'Local landing page with a lead form, built with the marketing and design team.',
+      },
+    },
+    {
+      image: '/projects/cater2me/landing-nyc.jpg',
+      title: { fr: 'Landing page — programme Pop-up à New York', en: 'Landing page — NYC Pop-up program' },
+      text: {
+        fr: 'Page de présentation d’une nouvelle offre, avec formulaire de demande en fenêtre modale.',
+        en: 'Landing page for a new offering, with a modal request form.',
+      },
+    },
+    {
+      image: '/projects/cater2me/feedback.jpg',
+      title: { fr: 'Dashboard client — feedback sur un repas', en: 'Client dashboard — meal feedback' },
+      text: {
+        fr: 'Notes par critère, motifs détaillés qui s’affichent si la note est basse, avis sur les portions plat par plat et pourboire pour le restaurant.',
+        en: 'Ratings per criterion, detailed reasons that appear when a rating is low, per-dish portion feedback and a tip for the vendor.',
+      },
+    },
+    {
+      image: '/projects/cater2me/vendor-dashboard.jpg',
+      title: { fr: 'Dashboard vendeur — planning des commandes', en: 'Vendor dashboard — order schedule' },
+      text: {
+        fr: 'Planning des livraisons sur 14 jours avec le statut de chaque commande, et impression des bons de commande, étiquettes et menus.',
+        en: '14-day delivery schedule with each order’s status, and printing of order sheets, labels and menus.',
+      },
+    },
+    {
+      image: '/projects/cater2me/vendor-ratings.jpg',
+      title: { fr: 'Dashboard vendeur — suivi des notes', en: 'Vendor dashboard — ratings' },
+      text: {
+        fr: 'Le vendeur retrouve les feedbacks laissés par les clients : moyennes sur 30 jours comparées à la moyenne générale, taux de livraison à l’heure et graphique des notes par commande.',
+        en: 'Vendors see the feedback left by clients: 30-day averages compared with the overall average, on-time delivery rate and a chart of ratings per order.',
+      },
+    },
+    {
+      image: ['/projects/cater2me/order-confirmation-1.jpg', '/projects/cater2me/order-confirmation-2.jpg'],
+      title: { fr: 'Bon de commande imprimable pour le vendeur', en: 'Printable order sheet for vendors' },
+      text: {
+        fr: 'Document généré depuis le dashboard vendeur : horaires de livraison, consignes d’accès et d’installation avec carte, puis le détail du menu avec quantités et pictogrammes des régimes alimentaires.',
+        en: 'Document generated from the vendor dashboard: delivery times, access and setup instructions with a map, then the menu detail with quantities and dietary icons.',
+      },
+    },
+    {
+      image: '/projects/cater2me/menu-pdf.jpg',
+      title: { fr: 'Menu imprimable généré en PDF', en: 'Printable menu generated as PDF' },
+      text: {
+        fr: 'Menu généré côté navigateur avec jsPDF depuis le dashboard vendeur, avec les pictogrammes des régimes alimentaires.',
+        en: 'Menu generated in the browser with jsPDF from the vendor dashboard, including dietary icons.',
+      },
+    },
+  ],
+};
 
 export const skills: { name: Record<Lang, string>; items: string[] }[] = [
   {
@@ -132,8 +219,12 @@ export const ui = {
     switchHref: '/',
     switchShort: 'EN',
     nav: { projects: 'Projets', skills: 'Compétences', experience: 'Expérience' },
-    projectsTitle: 'Mes projets',
+    projectsTitle: 'Projets personnels',
+    projectsIntro:
+      'Pour des raisons de confidentialité, je ne peux pas montrer les projets réalisés pour mes employeurs. Voici quelques petits projets personnels, à titre d’exemple.',
     visit: 'Voir le site',
+    seeProject: 'Voir le projet',
+    back: 'Retour',
     skillsTitle: 'Mes compétences',
     experienceTitle: 'Expérience',
     fullCv: 'Voir le CV complet',
@@ -156,8 +247,12 @@ export const ui = {
     switchHref: '/fr/',
     switchShort: 'FR',
     nav: { projects: 'Projects', skills: 'Skills', experience: 'Experience' },
-    projectsTitle: 'My projects',
+    projectsTitle: 'Side projects',
+    projectsIntro:
+      'For confidentiality reasons, I can’t share the work I’ve done for my employers. Here are a few small personal projects as examples.',
     visit: 'Visit site',
+    seeProject: 'See the project',
+    back: 'Back',
     skillsTitle: 'My skills',
     experienceTitle: 'Experience',
     fullCv: 'See full resume',

@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import { cater2me as c, ui, type Lang } from '../i18n/content';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const otherLang: Lang = lang === 'fr' ? 'en' : 'fr';
+const home = lang === 'fr' ? '/fr/' : '/';
+const otherPage = lang === 'fr' ? '/cater2me/' : '/fr/cater2me/';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{c.title[lang]} — Pauline Becchetti</title>
+    <meta name="description" content={c.intro[lang]} />
+    <link rel="alternate" hreflang={otherLang} href={otherPage} />
+    <link rel="icon" href="/images/avatar.png" />
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="topbar__nav">
+        <a href={`${home}#projects`}>← {t.back}</a>
+      </nav>
+      <a class="lang-switch" href={otherPage} hreflang={otherLang} lang={otherLang} aria-label={t.switchLabel}>
+        <span class:list={{ active: lang === 'fr' }}>FR</span>
+        <span class:list={{ active: lang === 'en' }}>EN</span>
+      </a>
+    </header>
+
+    <main class="case container">
+      <h1>{c.title[lang]}</h1>
+      <p class="case__period">{c.period[lang]}</p>
+      <p class="case__intro">{c.intro[lang]}</p>
+      <a class="btn btn--ghost" href={c.liveUrl} target="_blank" rel="noopener">{c.liveLabel[lang]} →</a>
+
+      {
+        c.items.map((item) => (
+          <figure class="case__item">
+            <div class:list={['case__images', { 'case__images--pages': Array.isArray(item.image) }]}>
+              {(Array.isArray(item.image) ? item.image : [item.image]).map((src) => (
+                <a href={src} target="_blank" rel="noopener">
+                  <img src={src} alt={item.title[lang]} loading="lazy" />
+                </a>
+              ))}
+            </div>
+            <figcaption>
+              <h2>{item.title[lang]}</h2>
+              <p>{item.text[lang]}</p>
+            </figcaption>
+          </figure>
+        ))
+      }
+
+      <a class="btn btn--primary" href={`${home}#projects`}>← {t.back}</a>
+    </main>
+
+    <footer class="footer container">
+      <p>© {new Date().getFullYear()} Pauline Becchetti</p>
+    </footer>
+  </body>
+</html>
