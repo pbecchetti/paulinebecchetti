@@ -1,0 +1,136 @@
+---
+import '../styles/global.css';
+import { EMAIL, SHOW_PROJECTS, experience, projects, skills, ui, type Lang } from '../i18n/content';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const otherLang: Lang = lang === 'fr' ? 'en' : 'fr';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.title}</title>
+    <meta name="description" content={t.metaDescription} />
+    <link rel="alternate" hreflang={otherLang} href={t.switchHref} />
+    <link rel="icon" href="/images/avatar.png" />
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="topbar__nav" aria-label="Sections">
+        {SHOW_PROJECTS && <a href="#projects">{t.nav.projects}</a>}
+        <a href="#skills">{t.nav.skills}</a>
+        <a href="#experience">{t.nav.experience}</a>
+      </nav>
+      <a class="lang-switch" href={t.switchHref} hreflang={otherLang} lang={otherLang} aria-label={t.switchLabel}>
+        <span class:list={{ active: lang === 'fr' }}>FR</span>
+        <span class:list={{ active: lang === 'en' }}>EN</span>
+      </a>
+    </header>
+
+    <section class="hero">
+      <div class="hero__cover" role="presentation"></div>
+      <div class="hero__body container">
+        <img class="hero__avatar" src="/images/avatar.png" alt="Pauline Becchetti" width="160" height="160" />
+        <h1>Pauline Becchetti</h1>
+        <p class="hero__role">{t.role}</p>
+        {t.intro.map((paragraph) => <p class="hero__intro">{paragraph}</p>)}
+        <div class="hero__actions">
+          <a class="btn btn--primary" href={`mailto:${EMAIL}`}>{t.contact}</a>
+          <a class="btn btn--ghost" href={t.cvHref} target="_blank" rel="noopener">{t.cv}</a>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      {SHOW_PROJECTS && (
+      <section id="projects" class="section container">
+        <h2>{t.projectsTitle}</h2>
+        <div class="projects">
+          {
+            projects.map((p) => (
+              <a class="project" href={p.url} target="_blank" rel="noopener">
+                <div class="project__preview">
+                  {p.image ? (
+                    <img src={p.image} alt="" loading="lazy" />
+                  ) : (
+                    <span class="project__placeholder">{p.title[lang].charAt(0)}</span>
+                  )}
+                </div>
+                <div class="project__body">
+                  <h3>{p.title[lang]}</h3>
+                  <p>{p.description[lang]}</p>
+                  <ul class="tags">
+                    {p.tags.map((tag) => (
+                      <li>{tag}</li>
+                    ))}
+                  </ul>
+                  <span class="project__link">{t.visit} →</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+      )}
+
+      <section id="skills" class="section section--alt">
+        <div class="container">
+          <h2>{t.skillsTitle}</h2>
+          <div class="skills">
+            {
+              skills.map((group) => (
+                <div class="skill-group">
+                  <h3>{group.name[lang]}</h3>
+                  <ul class="tags">
+                    {group.items.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="section container">
+        <h2>{t.experienceTitle}</h2>
+        <ol class="timeline">
+          {
+            experience.map((job) => (
+              <li class="timeline__item">
+                <p class="timeline__period">
+                  {job.period[lang]} · {job.place}
+                </p>
+                <h3>
+                  {job.company} <span>— {job.role[lang]}</span>
+                </h3>
+                <p>{job.summary[lang]}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <a class="btn btn--ghost" href={t.cvHref} target="_blank" rel="noopener">{t.fullCv}</a>
+      </section>
+
+      <section class="section section--alt contact">
+        <div class="container">
+          <h2>{t.contactTitle}</h2>
+          <p>{t.contactText}</p>
+          <a class="btn btn--primary" href={`mailto:${EMAIL}`}>{t.contact}</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer container">
+      <p>© {new Date().getFullYear()} Pauline Becchetti</p>
+    </footer>
+  </body>
+</html>
